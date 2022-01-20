@@ -1,0 +1,39 @@
+﻿@model ReservaCine.Models.Reserva
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar Reserva</h1>
+
+<h3>¿Estás seguro de querer eliminar esta Reserva?</h3>
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="row text-light">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaAlta)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaAlta)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Funcion.Pelicula)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Funcion.Pelicula.Titulo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CantidadButacas)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CantidadButacas)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a Mis Reservas</a>
+    </form>
+</div>

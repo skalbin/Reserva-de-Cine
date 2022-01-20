@@ -1,0 +1,70 @@
+﻿@model ReservaCine.Models.Funcion
+
+@{
+    ViewData["Title"] = "ConfirmarReserva";
+}
+
+<h1>Confirmar Reserva </h1>
+<h3>Estos son los detalles de tu Reserva</h3>
+<div>
+    <dl class="row text-light">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Pelicula)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Pelicula.Titulo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Hora)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Hora)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sala)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var sala = Model.Sala.Numero + " - " + Model.Sala.TipoSala.Nombre;
+            }
+            @sala
+        </dd>
+        <dt class="col-sm-2">
+            Precio Unitario
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sala.TipoSala.Precio)
+        </dd>
+        <dt class="col-sm-2">
+            Cantidad Butacas
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Butacas
+        </dd>
+        <dt class="col-sm-2">
+            Precio Total
+        </dt>
+        <dd class="col-sm-10">
+            @{var precioTotal = Model.Sala.TipoSala.Precio * @ViewBag.Butacas;} @*multiplico el precio unitario por la cantidad de butacas seleccionadas para obtener el precio total*@
+            @precioTotal
+        </dd>
+
+    </dl>
+</div>
+<div>
+
+    <form asp-controller="Reserva" asp-action="ReservaConfirmada" method="post">
+        <input name="FuncionId" type="hidden" value="@Model.Id" />
+        <input name="butacas" type="hidden" value="@ViewBag.Butacas" />
+        <button type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-primary">Confirmar</button> @*agrego estilo al botón*@
+    </form>
+    <form asp-controller="Reserva" asp-action="SeleccionarPelicula" method="post">
+        <button type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-danger">Volver</button>
+    </form>
+</div>

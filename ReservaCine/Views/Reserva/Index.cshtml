@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ReservaCine.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Reservas</h1>
+
+<p>
+    @if (User.IsInRole(nameof(Rol.Cliente))) { 
+        <a asp-action="SeleccionarPelicula">Crear Nueva Reserva</a>
+    }
+</p>
+<table class="table text-dark table-striped table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaAlta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadButacas)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAlta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadButacas)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar Reserva</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

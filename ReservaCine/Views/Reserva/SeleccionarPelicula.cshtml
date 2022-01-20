@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ReservaCine.Models.Pelicula>
+@{
+    ViewData["Title"] = "SeleccionarPelicula";
+}
+
+<h1>Elija su propia Aventura !!</h1>
+
+<table class="table text-dark table-striped table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duracion)
+
+            </th>
+            <th>
+                Seleccionar Cantidad de Butacas
+                <br />
+            </th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genero.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duracion)
+                    <br />
+                </td>
+
+                <td>
+                    <form asp-controller="Reserva" asp-action="SeleccionarFuncion" method="post">
+                        <input name="peliculaId" type="hidden" value="@item.Id" />
+                        <div class="form-group">
+                            <input type="number" min="1" value="2" name="butacas"  class="form-control" /> @*se la valida que la cantidad de butacas sea del tipo num y el valor por defe es 2*@
+                            <button type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-success">Seleccionar</button>
+                        </div>
+                        
+                    </form>
+
+
+
+                </td>
+
+
+            </tr>
+
+        }
+
+    </tbody>
+            
+</table>
+<form asp-controller="Reserva" asp-action="Index" method="post">
+            <button type="submit" class="nav-link font-weight-bold text-light float-right border border-dark btn btn-danger">Volver</button> @*agrego estilo al botón salir*@
+        </form>
+
+

@@ -1,0 +1,73 @@
+﻿@model ReservaCine.Models.Funcion
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Función</h4>
+<hr />
+<div class="row text-light">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hora" class="control-label"></label>
+                <input asp-for="Hora" class="form-control" />
+                <span asp-validation-for="Hora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Confirmar" /> @Html.DisplayNameFor(model => model.Confirmar)
+                </label>
+                <span asp-validation-for="Confirmar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sala" class="control-label"></label>
+                @Html.DropDownListFor(model => model.SalaId, (IEnumerable<SelectListItem>)ViewBag.Salas, new { @class = "custom-select" })
+                <span asp-validation-for="SalaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pelicula" class="control-label"></label>
+                <br />
+                <select id="ddlPelicula" name="PeliculaId" class="custom-select">
+
+                    @foreach (Pelicula pelicula in ViewBag.PeliculaId)
+                    {
+                        if (pelicula.Id == Model.PeliculaId)
+                        {
+                            <option value="@pelicula.Id" selected>@pelicula.Titulo</option>
+                        }
+                        <option value="@pelicula.Id">@pelicula.Titulo</option>
+                    }
+                </select>
+                <input asp-for="PeliculaId" type="hidden" name="PeliculaId" class="form-control" />
+                <span asp-validation-for="PeliculaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la Lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

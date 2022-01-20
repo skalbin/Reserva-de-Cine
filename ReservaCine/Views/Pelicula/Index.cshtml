@@ -1,0 +1,115 @@
+﻿@model IEnumerable<ReservaCine.Models.Pelicula>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cartelera</h1>
+
+<p>
+    @if (User.Identity.IsAuthenticated && User.IsInRole(nameof(Rol.Administrador)))
+    {
+        <a asp-action="Create">Crear nueva Película</a>
+    }
+</p>
+<table class="table text-dark table-striped table-light">  @*Modificación de visual de la tabla*@
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaLanzamiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duracion)
+            </th>
+            @if (User.Identity.IsAuthenticated && User.IsInRole(nameof(Rol.Administrador)))
+            {
+                <th></th>
+            }
+                @*permite reservar de pelicula si no esta logueado, pidiendole que inicie sesion para poder continuar con el proceso*@
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <th>
+
+                        Seleccionar Cantidad de Butacas
+                        <br />
+                    </th>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole(nameof(Rol.Cliente)))
+                {
+                    <th>
+
+                        Funciones
+                        <br />
+                    </th>
+                }
+            </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaLanzamiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genero.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duracion)
+                </td>
+
+                <td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(nameof(Rol.Administrador)))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        <label>|</label>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                        <label>|</label>
+                    }
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Usuario" asp-action="Ingresar" method="get">
+                                <input name="peliculaId" type="hidden" value="@item.Id" />
+                             
+                                <div class="form-group">
+                                    <input type="number" min="1" value="2" name="butacas" class="form-control" />
+                                    <button asp-controller="Reserva" asp-action="SeleccionarFuncion" asp-route-id="@item.Id" type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-success">Ver Funciones</button>
+                                </div>
+                            
+                            </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="Reserva" asp-action="ConfirmarReserva" method="post">
+                            <input name="peliculaId" type="hidden" value="@item.Id" />
+
+                            <div class="form-group">
+                                <button asp-controller="Pelicula" asp-action="Funciones"  asp-route-id="@item.Id" type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-success"> Ver Funciones</button>
+                            </div>
+                        </form>
+                    }
+                </td>
+
+                
+            </tr>
+
+        }
+        </tbody>
+</table>

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ReservaCine.Models.Funcion>
+
+@{
+    ViewData["Title"] = "Funciones Disponibles";
+}
+<h1>Funciones Disponibles</h1>
+
+<table class="table text-dark table-striped table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pelicula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sala)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantButacasDisponibles)
+            </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+        <tr>
+            @if (item.Confirmar && item.CantButacasDisponibles > 0)
+            {
+            <td>
+                @Html.DisplayFor(modelItem => item.Pelicula.Titulo)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Sala.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantButacasDisponibles)
+            </td>
+            }
+           
+
+
+        </tr>
+                }
+        </tbody>
+</table>
+<div>
+    @if (User.IsInRole(nameof(Rol.Cliente)))
+    {
+
+
+        <a asp-action="Index"> Volver a la lista </a>
+
+    }
+
+</div>

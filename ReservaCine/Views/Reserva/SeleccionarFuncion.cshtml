@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ReservaCine.Models.Funcion>
+
+@{
+    ViewData["Title"] = "SeleccionarFuncion";
+}
+
+<h1>Funciones Disponibles</h1>
+
+<table class="table text-dark table-striped table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pelicula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sala)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantButacasDisponibles)
+            </th>
+            <th>
+
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pelicula.Titulo)
+            </td>
+
+            <td>
+                @{
+                    var sala = item.Sala.Numero + " - " + item.Sala.TipoSala.Nombre;
+                }
+                @sala
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantButacasDisponibles)
+            </td>
+            <td>
+                <form asp-controller="Reserva" asp-action="ConfirmarReserva" method="post">
+                    <input name="FuncionId" type="hidden" value="@item.Id" />
+                    <input name="butacas" type="hidden" value="@ViewBag.Butacas" />
+                    <input name="peliculaId" type="hidden" value="@item.Id" />
+                    <div class="form-group">
+
+                    </div>
+                    <button type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-success">Seleccionar</button>
+                </form>
+            </td>
+            
+
+
+        </tr>
+        }
+    </tbody>
+</table>
+<form asp-controller="Reserva" asp-action="SeleccionarPelicula" method="post">
+    <button type="submit" class="nav-link font-weight-bold text-light float-right border border-dark btn btn-danger">Volver</button> @*agrego estilo al botón salir*@
+</form>

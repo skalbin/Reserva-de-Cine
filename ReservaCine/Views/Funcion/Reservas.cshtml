@@ -1,0 +1,65 @@
+﻿@model ReservaCine.Models.Funcion
+
+@{
+    ViewData["Title"] = "Reservas Realizadas";
+}
+@if (User.IsInRole(nameof(Rol.Administrador)))
+{
+    <h1>Reservas Realizadas</h1>
+    <div>
+        <hr />
+        <h4>
+            <dl>
+
+                <dt class="col-sm-2 text-danger">
+                    @Html.DisplayNameFor(model => model.Pelicula)
+                </dt>
+
+                <dd class="col-sm-10 text-danger">
+                    @Html.DisplayFor(model => model.Pelicula.Titulo)
+                </dd>
+
+            </dl>
+        </h4>
+        <table class="table text-dark table-striped table-light">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Cliente
+                        <br />
+                    </th>
+                    <th>
+                        Fecha de reserva
+                        <br />
+                    </th>
+                    <th>
+                        Cantidad de butacas reservadas
+
+                    </th>
+
+
+            <tbody>
+                @foreach (var item in Model.Reservas)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaAlta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CantidadButacas)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+
+        <a asp-action="Index"> Volver a la lista </a>
+
+    </div>
+}

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ReservaCine.Models.Funcion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Funciones</h1>
+
+<p>
+    @if (User.Identity.IsAuthenticated && User.IsInRole(nameof(Rol.Administrador)))
+    {
+        <a asp-action="Create">Crear nueva Función</a>
+    }
+</p>
+<table class="table text-dark table-striped table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pelicula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantButacasDisponibles)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Sala)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pelicula.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantButacasDisponibles)
+            </td>
+
+            <td>
+                @{
+                    var sala = item.Sala.Numero + " - " + item.Sala.TipoSala.Nombre;
+                }
+                @sala
+               
+            </td>
+
+            <td>
+                @if (User.Identity.IsAuthenticated && User.IsInRole(nameof(Rol.Administrador)))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <form asp-controller="Funcion" asp-action="Reservas" method="get">
+                        <div class="form-group">
+                            <button asp-controller="Funcion" asp-action="Reservas" asp-route-id="@item.Id" type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-success"> Ver Reservas</button>
+                        </div>
+                     </form>
+
+                  }
+
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

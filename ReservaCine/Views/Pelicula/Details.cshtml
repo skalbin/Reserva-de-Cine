@@ -1,0 +1,54 @@
+﻿@model ReservaCine.Models.Pelicula
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Película</h4>
+    <hr />
+    <dl class="row text-light">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaLanzamiento)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaLanzamiento)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Genero)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Genero.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Duracion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Duracion)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole(nameof(Rol.Administrador)))
+    {
+      <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+      
+    }
+       <a asp-action="Funciones" asp-route-id="@Model.Id">Ver Funciones</a> |@*agregar link de funciones y se codif en el controllador de peli*@
+       <a asp-action="Index">Volver a la lista</a>
+</div>
